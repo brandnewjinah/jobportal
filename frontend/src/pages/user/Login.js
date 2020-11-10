@@ -75,7 +75,7 @@ const Login = (props) => {
         <h4>Login</h4>
         <form onSubmit={handleSubmit}>
           <Input
-            label="Email"
+            placeholder="Email"
             type="text"
             name="email"
             value={data.email}
@@ -83,7 +83,7 @@ const Login = (props) => {
             handleChange={handleChange}
           />
           <Input
-            label="Password"
+            placeholder="Password"
             type="password"
             name="password"
             value={data.password}

@@ -67,7 +67,9 @@ const Signup = (props) => {
       .post("http://localhost:5000/user/signup", user)
       .then((res) => {
         if (res.status === 200) {
-          props.history.push("/login");
+          const token = res.data.userInfo.token;
+          localStorage.setItem("toekn", token);
+          window.location = "/";
           alert("User Registered successfully");
         }
       })
@@ -83,11 +85,12 @@ const Signup = (props) => {
 
   return (
     <Wrapper>
+      <Hero>Hero image</Hero>
       <Container>
         <h4>Signup</h4>
         <form onSubmit={handleSubmit}>
           <Input
-            label="Name"
+            placeholder="Name"
             type="text"
             name="name"
             value={data.name}
@@ -95,7 +98,7 @@ const Signup = (props) => {
             handleChange={handleChange}
           />
           <Input
-            label="Email"
+            placeholder="Email"
             type="text"
             name="email"
             value={data.email}
@@ -103,7 +106,7 @@ const Signup = (props) => {
             handleChange={handleChange}
           />
           <Input
-            label="Password"
+            placeholder="Password"
             type="password"
             name="password"
             value={data.password}
@@ -111,7 +114,7 @@ const Signup = (props) => {
             handleChange={handleChange}
           />
           <Input
-            label="Confirm Password"
+            placeholder="Confirm Password"
             type="password"
             name="confirmpw"
             value={data.confirmpw}
@@ -127,11 +130,23 @@ const Signup = (props) => {
 
 const Wrapper = styled.div`
   width: 100%;
+  display: flex;
+
+  @media (max-width: 840px) {
+    flex-direction: column;
+  }
+`;
+
+const Hero = styled.div`
+  width: 50%;
+  background-color: yellow;
+  margin: 0 auto;
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: 50%;
   max-width: 640px;
+  padding: 0 2em;
   margin: 0 auto;
 `;
 

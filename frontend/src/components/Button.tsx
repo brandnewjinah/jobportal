@@ -42,7 +42,7 @@ const Wrapper = styled.button`
   color: white;
   font-size: 1rem;
   font-weight: 600;
-  padding: 1em 2.5em;
+  padding: 0.75em 2.5em;
   cursor: pointer;
 `;
 

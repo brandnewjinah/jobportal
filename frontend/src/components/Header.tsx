@@ -12,7 +12,21 @@ const Header: FC<Props> = (props) => {
   return (
     <Wrapper>
       <Container>
-        <Left>left</Left>
+        <Left>Logo</Left>
+        <Center>
+          <Link to="/">
+            <Category>Home</Category>
+          </Link>
+          <Link to="/1">
+            <Category>Category</Category>
+          </Link>
+          <Link to="/2">
+            <Category>Category</Category>
+          </Link>
+          <Link to="/3">
+            <Category>Category</Category>
+          </Link>
+        </Center>
         <Right className="flex">
           {!props.user && (
             <>
@@ -27,7 +41,6 @@ const Header: FC<Props> = (props) => {
           {props.user && <div>Hi, {props.user.name}</div>}
         </Right>
       </Container>
-      <Logo>Logo</Logo>
     </Wrapper>
   );
 };
@@ -55,17 +68,18 @@ const Container = styled.div`
 
 const Left = styled.div``;
 
+const Center = styled.div`
+  display: flex;
+`;
+
+const Category = styled.div`
+  margin: 0 2em;
+`;
+
 const Right = styled.div`
   div {
     margin-left: 1.5em;
   }
 `;
 
-const Logo = styled.div`
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  padding: 1em 0 2em 0;
-  margin: 0 auto;
-`;
 export default Header;

@@ -6,7 +6,6 @@ import { Eye, EyeOff } from "../assets/Icons";
 
 interface Props {
   error?: string;
-  label?: string;
   type?: string;
   value?: any;
   name?: string;
@@ -17,7 +16,6 @@ interface Props {
 
 const Input: FC<Props> = ({
   error,
-  label,
   type,
   value,
   name,
@@ -26,11 +24,16 @@ const Input: FC<Props> = ({
   handleChange,
 }) => {
   const [password, setPassword] = useState(true);
+  const [focus, setFocus] = useState(false);
+
+  const focusOutline = {
+    borderColor: focus ? `blue` : `#e4e4e4`,
+    transition: `all 0.20s ease-in-out`,
+  };
 
   return (
     <Wrapper>
-      <label htmlFor="">{label}</label>
-      <InputContainer>
+      <InputContainer style={focusOutline}>
         {prefix && <div>{prefix}</div>}
         <input
           className={error ? "input error" : "input"}
@@ -38,6 +41,8 @@ const Input: FC<Props> = ({
           value={value}
           name={name}
           placeholder={placeholder}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
           onChange={handleChange}
         />
         {type === "password" && (
@@ -58,8 +63,7 @@ const Input: FC<Props> = ({
 };
 
 const Wrapper = styled.div`
-  label {
-  }
+  margin: 1em 0;
 
   .error {
     border: 1px solid red;
@@ -77,17 +81,20 @@ const InputContainer = styled.div`
     width: 100%;
     flex: 1;
     border: transparent;
-    padding: 0.75em;
+    outline: transparent;
+    padding: 0.45em 0;
     margin: 0.5em 0;
   }
 `;
 
 const Error = styled.div`
   color: red;
+  font-size: 0.875rem;
 `;
 
 const Toggle = styled.div`
   right: 0.75em;
+  display: flex;
   margin-left: 1em;
 `;
 
