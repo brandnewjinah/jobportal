@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
+const checkAuth = passport.authenticate("jwt", { session: false });
 
-const { user_signup, user_all } = require("../controller/user");
+const { user_signup, user_login, user_current } = require("../controller/user");
 
-//create
 router.post("/signup", user_signup);
-
-//get
-router.get("/", user_all);
+router.post("/login", user_login);
+router.get("/current", checkAuth, user_current);
 
 module.exports = router;

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import jwtDecode from "jwt-decode";
 
 //import components
 import Footer from "./Footer";
@@ -8,9 +9,22 @@ import styled from "styled-components";
 import Header from "./Header";
 
 const Layout = ({ children }) => {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    try {
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const user = jwtDecode(token);
+      setUser(user);
+    } catch (ex) {
+      setUser(null);
+    }
+  }, []);
+
   return (
     <Wrapper>
-      <Header />
+      <Header user={user} />
       <Container>
         <div>{children}</div>
       </Container>

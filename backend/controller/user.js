@@ -1,80 +1,94 @@
 const userModel = require("../models/user");
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-//signup
 exports.user_signup = (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password, name } = req.body;
 
   userModel
     .findOne({ email })
     .then((user) => {
       if (user) {
         return res.status(400).json({
-          error: "Email is already being used",
+          message: "Email taken",
         });
       } else {
-        bcrypt.hash(password, 10, (err, hash) => {
-          if (err) {
-            return res.status(500).json({
+        const newUser = new userModel({
+          name,
+          email,
+          password,
+        });
+
+        newUser
+          .save()
+          .then((user) => {
+            res.status(200).json({
+              message: "user created",
+              userInfo: user,
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({
               error: err,
             });
-          } else {
-            const token = jwt.sign({ name, email }, "secret", {
-              expiresIn: "1d",
-            });
-            const user = new userModel({
-              name,
-              email,
-              password: hash,
-            });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+      });
+    });
+};
 
-            user
-              .save()
-              .then((user) => {
-                res.status(200).json({
-                  message: "User registered",
-                  userInfo: { name, email, password: hash, token },
-                });
-              })
-              .catch((err) => {
-                res.status(500).json({
-                  error: err,
-                });
-              });
+exports.user_login = (req, res) => {
+  const { email, password } = req.body;
+
+  userModel
+    .findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return res.status(400).json({
+          messsage: "Not a registered user",
+        });
+      } else {
+        user.comparePassword(password, (err, isMatch) => {
+          console.log(isMatch);
+          if (err || !isMatch) {
+            return res.status(400).json({
+              errors: "Password Incorrect",
+            });
+          } else {
+            const token = jwt.sign(
+              { id: user._id, email: user.email, name: user.name },
+              process.env.SECRET_KEY,
+              { expiresIn: "1d" }
+            );
+            res.status(200).json({
+              message: "user logged in",
+              token,
+            });
           }
         });
       }
     })
     .catch((err) => {
-      message: err.message;
+      res.status(500).json({
+        error: err,
+      });
     });
 };
 
-//get all users
-exports.user_all = (req, res) => {
+exports.user_current = (req, res) => {
   userModel
-    .find()
-    .then((users) => {
-      res.json({
-        message: "All users",
-        count: users.length,
-        users: users.map((user) => {
-          return {
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            request: {
-              type: "GET",
-              url: "http://localhost:5000/user/" + user._id,
-            },
-          };
-        }),
-      });
+    .findById(req.user.id)
+    .then((user) => {
+      if (user) {
+        return res.status(200).json(user);
+      } else {
+        res.status(400).json({
+          message: "user not found",
+        });
+      }
     })
-    .catch((err) => {
-      res.json({
-        message: err.message,
-      });
-    });
+    .catch((err) => console.log(err));
 };
