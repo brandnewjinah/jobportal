@@ -9,9 +9,12 @@ exports.user_signup = (req, res) => {
     .then((user) => {
       if (user) {
         return res.status(400).json({
-          message: "Email taken",
+          message: "Email is already being used",
         });
       } else {
+        const token = jwt.sign({ name, email }, process.env.SECRET_KEY, {
+          expiresIn: "1d",
+        });
         const newUser = new userModel({
           name,
           email,
@@ -23,7 +26,7 @@ exports.user_signup = (req, res) => {
           .then((user) => {
             res.status(200).json({
               message: "user created",
-              userInfo: user,
+              userInfo: { name, email, password, token },
             });
           })
           .catch((err) => {
