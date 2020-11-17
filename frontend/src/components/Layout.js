@@ -40,10 +40,10 @@ const Layout = ({ children }) => {
       .then((res) => {
         console.log(res.data);
         setUser(res.data);
-      })
-      .catch((err) => {
-        alert(err);
       });
+    // .catch((err) => {
+    //   alert(err);
+    // });
   };
 
   return (

@@ -69,8 +69,8 @@ const Signup = (props) => {
         if (res.status === 200) {
           const token = res.data.userInfo.token;
           localStorage.setItem("token", token);
-          window.location = "/";
           alert("User Registered successfully");
+          window.location = "/";
         }
       })
       .catch((err) => {
