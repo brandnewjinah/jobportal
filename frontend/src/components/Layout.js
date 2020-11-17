@@ -38,7 +38,7 @@ const Layout = ({ children }) => {
     await axios
       .get("http://localhost:5000/user/current", options)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setUser(res.data);
       });
     // .catch((err) => {

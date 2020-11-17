@@ -9,10 +9,9 @@ const profileSchema = mongoose.Schema(
     },
     handle: {
       type: String,
-      required: true,
       max: 40,
     },
-    interest: [],
+    interests: [],
   },
   { timestamps: true }
 );

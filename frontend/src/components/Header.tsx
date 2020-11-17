@@ -9,7 +9,6 @@ interface Props {
 }
 
 const Header: FC<Props> = (props) => {
-  console.log(props);
   return (
     <Wrapper>
       <Container>

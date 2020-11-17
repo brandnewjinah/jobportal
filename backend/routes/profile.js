@@ -4,39 +4,17 @@ const passport = require("passport");
 const checkAuth = passport.authenticate("jwt", { session: false });
 const profileModel = require("../models/profile");
 
-// creating profile
-// @route POST http://localhost:5000/profile
-// @desc Register user profile
-// @access Private
+const {
+  profile_create,
+  profile_get_all,
+  profile_get_each,
+  profile_delete_each,
+} = require("../controller/profile");
 
-router.post("/", checkAuth, (req, res) => {
-  const profileFields = {};
-
-  profileFields.user = req.user.id; //from checkAuth
-  if (req.body.handle) profileFields.handle = req.body.handle;
-
-  if (typeof req.body.skills !== "undefined") {
-    profileFields.skills = req.body.skills.split(",");
-  }
-
-  //find matching user profile
-  profileModel
-    .findOne({ user: req.user.id })
-    .then((profile) => {
-      if (profile) {
-        return res.json({
-          message: "Profile already exists. Please update profile",
-        });
-      } else {
-        // if no profile, post new profile
-        new profileModel(profileFields)
-          .save()
-          .then((profile) => res.json(profile))
-          .catch((err) => res.status(408).json(err));
-      }
-    })
-    .catch((err) => res.status(500).json(err));
-});
+router.post("/", checkAuth, profile_create);
+router.get("/", profile_get_all);
+router.get("/:profileId", profile_get_each);
+router.delete("/:profileId", profile_delete_each);
 
 router.get("/", checkAuth, (req, res) => {
   profileModel

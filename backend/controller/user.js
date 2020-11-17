@@ -95,3 +95,50 @@ exports.user_current = (req, res) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.user_get_all = (req, res) => {
+  userModel
+    .find()
+    .then((users) => {
+      res.json({
+        message: "All users",
+        users: users.map((user) => {
+          return {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            request: {
+              type: "GET",
+              url: "http://localhost:5000/user/" + user._id,
+            },
+          };
+        }),
+      });
+    })
+    .catch((err) => {
+      res.json({
+        message: err.message,
+      });
+    });
+};
+
+exports.user_delete_each = (req, res) => {
+  const id = req.params.userId;
+
+  userModel
+    .findByIdAndDelete(id)
+    .then((user) => {
+      res.json({
+        message: "Deleted user",
+        request: {
+          type: "GET",
+          url: "http://localhost:5000/user",
+        },
+      });
+    })
+    .catch((err) => {
+      res.json({
+        message: err.message,
+      });
+    });
+};

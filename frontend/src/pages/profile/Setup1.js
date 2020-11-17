@@ -6,9 +6,13 @@ import { colourOptions } from "../../data/data";
 
 //import styles and assets
 import styled from "styled-components";
+import { Button } from "../../components/Button";
 
 const Setup1 = () => {
   const [user, setUser] = useState({});
+  const [profile, setProfile] = useState({
+    interests: [],
+  });
 
   useEffect(() => {
     loadUser();
@@ -32,6 +36,32 @@ const Setup1 = () => {
       });
   };
 
+  const handleChange = (value) => {
+    const result = value.map((o) => o.value);
+    setProfile({ ...profile, interests: result });
+  };
+
+  const postData = async () => {
+    const token = localStorage.getItem("token");
+
+    const options = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    await axios
+      .post("http://localhost:5000/profile", profile, options)
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Interest saved");
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
+
   return (
     <Wrapper>
       <Header>
@@ -42,8 +72,10 @@ const Setup1 = () => {
           isMulti
           name="colors"
           options={colourOptions}
+          onChange={handleChange}
         />
       </Header>
+      <Button label="Next" handleClick={postData} />
     </Wrapper>
   );
 };
