@@ -53,6 +53,7 @@ const Login = (props) => {
       .post("http://localhost:5000/user/login", user)
       .then((res) => {
         if (res.status === 200) {
+          console.log(res.data);
           const token = res.data.token;
           localStorage.setItem("token", token);
           window.location = "/";

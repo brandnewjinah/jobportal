@@ -12,6 +12,7 @@ import Category3 from "./pages/Category3";
 import Signup from "./pages/user/Signup";
 import Login from "./pages/user/Login";
 import Setup1 from "./pages/profile/Setup1";
+import Suggested from "./pages/Suggested";
 
 const Routes = () => {
   return (
@@ -25,6 +26,7 @@ const Routes = () => {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/setup1" component={Setup1} />
+          <Route exact path="/suggested" component={Suggested} />
         </Switch>
       </Layout>
     </Router>
