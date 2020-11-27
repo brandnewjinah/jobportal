@@ -12,20 +12,25 @@ const Suggested = () => {
 
   const getData = async () => {
     await axios
-      .get("https://restcountries.eu/rest/v2/all")
+      //   .get("https://restcountries.eu/rest/v2/all")
+      .get("/data/data.json")
       .then((res) => {
-        setData(res.data);
+        setData(res.data.title);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  useEffect(() => {
+    const filtered = data.map((c, idx) => c.label);
+    setFiltered(
+      filtered.filter((data) => !selected.find((select) => select === data))
+    );
+  }, [selected]);
+
   const handleSelection = (n) => {
     setSelected([...selected, n]);
-    // setFiltered(data.name.filter((country) => !selected.includes(country)));
-    const test = data.map((c, idx) => c.name);
-    console.log(test.filter((c) => !selected.includes(c)));
   };
 
   return (
@@ -35,18 +40,18 @@ const Suggested = () => {
       </form>
       <div>
         <ul>
-          {data.map((country, idx) => (
-            <li key={idx} onClick={() => handleSelection(country.name)}>
-              {country.name}
+          {data.map((title, idx) => (
+            <li key={idx} onClick={() => handleSelection(title.label)}>
+              {title.label}
             </li>
           ))}
         </ul>
       </div>
       <div>
-        <p>Filtered</p>
+        <p>filtered</p>
         <ul>
-          {selected.map((country, idx) => (
-            <li key={idx}>{country}</li>
+          {filtered.map((title, idx) => (
+            <li key={idx}>{title}</li>
           ))}
         </ul>
       </div>
