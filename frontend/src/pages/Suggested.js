@@ -23,11 +23,13 @@ const Suggested = () => {
   };
 
   useEffect(() => {
-    const filtered = data.map((c, idx) => c.label);
-    setFiltered(
-      filtered.filter((data) => !selected.find((select) => select === data))
-    );
-  }, [selected]);
+    const newdata = data.map((c, idx) => c.label);
+    if (selected.length > 0) {
+      setFiltered(newdata.filter((data) => !selected.includes(data)));
+    } else {
+      setFiltered(newdata);
+    }
+  }, [selected, data]);
 
   const handleSelection = (n) => {
     setSelected([...selected, n]);
