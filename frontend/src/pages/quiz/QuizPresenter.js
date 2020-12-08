@@ -7,22 +7,25 @@ import { Check } from "../../assets/Icons";
 
 const QuizPresenter = (props) => {
   const quiz = props.quiz && props.quiz;
-  const [selection, setSelection] = useState([]);
+  const name = quiz && quiz.name;
+  const [profile, setProfile] = useState({
+    goal: [],
+  });
 
   const handleSelection = (option) => {
-    let newSelection = [...selection];
-    let duplicate = newSelection.find((item) => item.id === option.id);
+    let newOption = [...profile[name]];
+
+    let duplicate = newOption.find((item) => item.id === option.id);
 
     if (duplicate) {
-      newSelection = newSelection.filter((f) => f.id !== option.id);
+      newOption = newOption.filter((f) => f.id !== option.id);
     } else {
-      newSelection = [...selection, option];
+      newOption = [...profile[name], option];
     }
 
-    setSelection(newSelection);
+    setProfile({ ...profile, [name]: newOption });
   };
 
-  console.log(selection);
   return (
     <Wrapper>
       <Header>
@@ -33,7 +36,7 @@ const QuizPresenter = (props) => {
         {quiz &&
           quiz.selections.map((option, idx) => (
             <Selection key={idx} onClick={() => handleSelection(option)}>
-              {selection.find((f) => f.id === option.id) && (
+              {profile[name].find((f) => f.id === option.id) && (
                 <div>
                   <Check width="20" height="20" color="#000" stroke="2" />
                 </div>

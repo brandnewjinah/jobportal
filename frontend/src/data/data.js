@@ -14,6 +14,7 @@ export const colourOptions = [
 export const quizContents = [
   {
     page: 1,
+    name: "goal",
     header: "What is your goal",
     sub: "Select all that apply",
     selections: [
