@@ -10,3 +10,39 @@ export const colourOptions = [
   { value: "Marketing", label: "Marketing", color: "#FFC400" },
   { value: "HR", label: "HR", color: "#36B37E" },
 ];
+
+export const quizContents = [
+  {
+    page: 1,
+    header: "What is your goal",
+    sub: "Select all that apply",
+    selections: [
+      {
+        id: 1,
+        title: "Lose Weight",
+      },
+      {
+        id: 2,
+        title: "Get Healthier",
+        options: [
+          {
+            id: 1,
+            title: "Lower Cholestrol",
+          },
+          {
+            id: 2,
+            title: "Better Sleep",
+          },
+          {
+            id: 3,
+            title: "Improve Hydration",
+          },
+          {
+            id: 4,
+            title: "Better Bowel Movement",
+          },
+        ],
+      },
+    ],
+  },
+];

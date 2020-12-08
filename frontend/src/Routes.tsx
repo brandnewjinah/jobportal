@@ -13,7 +13,7 @@ import Signup from "./pages/user/Signup";
 import Login from "./pages/user/Login";
 import Setup1 from "./pages/profile/Setup1";
 import Suggested from "./pages/Suggested";
-import StepOne from "./pages/eval/StepOne";
+import Quiz from "./pages/quiz";
 
 const Routes = () => {
   return (
@@ -28,7 +28,7 @@ const Routes = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/setup1" component={Setup1} />
           <Route exact path="/suggested" component={Suggested} />
-          <Route exact path="/stepone" component={StepOne} />
+          <Route exact path="/quiz" component={Quiz} />
         </Layout>
       </Switch>
     </Router>
