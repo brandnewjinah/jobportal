@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+
+
  * {
         box-sizing: border-box;
         margin: 0;
@@ -16,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         background-color: white;
-        font-size: 1.05rem;
+        font-size: 1rem;
         line-height: 1.875rem;
         font-weight: 400;
     }
@@ -37,12 +39,12 @@ const GlobalStyle = createGlobalStyle`
     }
     h4 {
         font-weight: 500;
-        font-size: 1.5rem;
+        font-size: 1.35rem;
     }
 
     h5 {
         font-weight: 500;
-        font-size: 1.35rem;
+        font-size: 1.25rem;
     }
 
     h6 {

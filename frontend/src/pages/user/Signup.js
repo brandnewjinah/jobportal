@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Button } from "../../components/Button";
 
 //import components
+import Header from "../../components/Header";
 
 import Input from "../../components/Input";
 
@@ -85,69 +86,86 @@ const Signup = (props) => {
 
   return (
     <Wrapper>
-      <Hero>Hero image</Hero>
-      <Container>
-        <h4>Signup</h4>
-        <form onSubmit={handleSubmit}>
-          <Input
-            placeholder="Name"
-            type="text"
-            name="name"
-            value={data.name}
-            error={errors.name}
-            handleChange={handleChange}
-          />
-          <Input
-            placeholder="Email"
-            type="text"
-            name="email"
-            value={data.email}
-            error={errors.email}
-            handleChange={handleChange}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            name="password"
-            value={data.password}
-            error={errors.password}
-            handleChange={handleChange}
-          />
-          <Input
-            placeholder="Confirm Password"
-            type="password"
-            name="confirmpw"
-            value={data.confirmpw}
-            error={errors.confirmpw}
-            handleChange={handleChange}
-          />
-          <Button label="Signup" />
-        </form>
-      </Container>
+      <Header />
+      <Main>
+        <Hero>Hero image</Hero>
+        <Container>
+          <h4>Sign up to start your healthy journey</h4>
+          <form onSubmit={handleSubmit}>
+            <Input
+              placeholder="Name"
+              type="text"
+              name="name"
+              value={data.name}
+              error={errors.name}
+              handleChange={handleChange}
+            />
+            <Input
+              placeholder="Email"
+              type="text"
+              name="email"
+              value={data.email}
+              error={errors.email}
+              handleChange={handleChange}
+            />
+            <Input
+              placeholder="Password"
+              type="password"
+              name="password"
+              value={data.password}
+              error={errors.password}
+              handleChange={handleChange}
+            />
+            <Input
+              placeholder="Confirm Password"
+              type="password"
+              name="confirmpw"
+              value={data.confirmpw}
+              error={errors.confirmpw}
+              handleChange={handleChange}
+            />
+            <BtnContainer>
+              <Button label="Signup" />
+            </BtnContainer>
+          </form>
+        </Container>
+      </Main>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
   width: 100%;
-  display: flex;
+  height: 100vh;
+  /* display: flex;
 
   @media (max-width: 840px) {
     flex-direction: column;
-  }
+  } */
+`;
+
+const Main = styled.div`
+  display: flex;
+  height: 100vh;
 `;
 
 const Hero = styled.div`
   width: 50%;
-  background-color: yellow;
-  margin: 0 auto;
+  background-color: #d1e6d1;
+  margin: 0;
 `;
 
 const Container = styled.div`
   width: 50%;
   max-width: 640px;
-  padding: 0 2em;
-  margin: 0 auto;
+  padding: 4em;
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2em 0;
 `;
 
 export default Signup;

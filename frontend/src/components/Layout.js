@@ -3,7 +3,6 @@ import jwtDecode from "jwt-decode";
 import axios from "axios";
 
 //import components
-import Footer from "./Footer";
 
 //import styles and assets
 import styled from "styled-components";
@@ -52,7 +51,6 @@ const Layout = ({ children }) => {
       <Container>
         <div>{children}</div>
       </Container>
-      <Footer />
     </Wrapper>
   );
 };

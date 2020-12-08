@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC } from "react";
 
 //import styles and assets
 import styled from "styled-components";
+import { ArrowRight, ArrowLeft } from "../assets/Icons";
 
 interface Props {
   label?: string;
@@ -9,6 +10,7 @@ interface Props {
   value?: string;
   name?: string;
   imp?: string;
+  direction?: string;
   handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   handleClick?: () => void;
 }
@@ -35,15 +37,34 @@ export const BtnText: FC<Props> = ({ label, handleClick }) => {
   return <Text onClick={handleClick}>{label}</Text>;
 };
 
+export const BtnArrow: FC<Props> = ({ label, direction, handleClick }) => {
+  return (
+    <Circle>
+      {direction === "left" ? (
+        <ArrowLeft width="20" height="20" color="#000" stroke="2" />
+      ) : (
+        <ArrowRight width="20" height="20" color="#000" stroke="2" />
+      )}
+    </Circle>
+  );
+};
+
 const Wrapper = styled.button`
   outline: transparent;
   border: transparent;
-  border-radius: 0.25em;
+  border-radius: 3em;
   color: white;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.75em 2.5em;
+  letter-spacing: 0.125em;
+  text-transform: uppercase;
+  padding: 1.5em 3.5em;
   cursor: pointer;
+  transition: opacity 0.15s linear;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Text = styled.button`
@@ -56,4 +77,11 @@ const Text = styled.button`
   &:hover {
     opacity: 0.5;
   }
+`;
+
+const Circle = styled.button`
+  display: flex;
+  padding: 1em;
+  border-radius: 50%;
+  border: none;
 `;

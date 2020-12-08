@@ -26,6 +26,11 @@ const Input: FC<Props> = ({
   const [password, setPassword] = useState(true);
   const [focus, setFocus] = useState(false);
 
+  // const labelStyle = {
+  //   top: focus ? 0 : `1em`,
+  //   fontSize: focus ? `.35em` : `.75em`,
+  // };
+
   const focusOutline = {
     borderColor: focus ? `blue` : `#e4e4e4`,
     transition: `all 0.20s ease-in-out`,
@@ -33,6 +38,7 @@ const Input: FC<Props> = ({
 
   return (
     <Wrapper>
+      {/* <Label style={labelStyle}>{placeholder}</Label> */}
       <InputContainer style={focusOutline}>
         {prefix && <div>{prefix}</div>}
         <input
@@ -45,6 +51,7 @@ const Input: FC<Props> = ({
           onBlur={() => setFocus(false)}
           onChange={handleChange}
         />
+
         {type === "password" && (
           <Toggle onClick={() => setPassword(!password)}>
             {password ? (
@@ -70,26 +77,33 @@ const Wrapper = styled.div`
   }
 `;
 
+const Label = styled.div`
+  position: absolute;
+  left: 0.75em;
+`;
+
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid #e4e4e4;
   border-radius: 0.25em;
   padding: 0 1em;
+  transition: all 0.15s linear;
+  position: relative;
 
   .input {
     width: 100%;
     flex: 1;
     border: transparent;
     outline: transparent;
-    padding: 0.45em 0;
+    padding: 0.75em 0;
     margin: 0.5em 0;
   }
 `;
 
 const Error = styled.div`
-  color: red;
-  font-size: 0.875rem;
+  color: #d9493f;
+  font-size: 0.75rem;
 `;
 
 const Toggle = styled.div`
