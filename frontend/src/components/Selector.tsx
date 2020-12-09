@@ -6,34 +6,33 @@ import { ArrowRight, ArrowLeft } from "../assets/Icons";
 
 interface Props {
   label?: string;
-  type?: string;
-  value?: string;
-  name?: string;
-  imp?: string;
+  selected?: boolean;
   direction?: number;
   handleToggle?: () => void;
 }
 
 export const Selector: FC<Props> = ({
   label,
-  type,
-  value,
-  name,
-  imp,
   direction,
+  selected,
   handleToggle,
 }) => {
   return (
     <>
       {direction === 2 ? (
         <Right
-          style={{ backgroundColor: imp === "primary" ? "#f2665c" : "#f2665c" }}
+          style={{ backgroundColor: selected ? "#f2665c" : "" }}
           onClick={handleToggle}
         >
           {label}
         </Right>
       ) : (
-        <Left onClick={handleToggle}>{label}</Left>
+        <Left
+          style={{ backgroundColor: selected ? "#f2665c" : "" }}
+          onClick={handleToggle}
+        >
+          {label}
+        </Left>
       )}
     </>
   );
@@ -43,8 +42,9 @@ const Common = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #dddddd;
   width: 40px;
-  height: 40px;
+  height: 30px;
   color: white;
   font-size: 0.75rem;
   font-weight: 600;
@@ -60,7 +60,6 @@ const Common = styled.div`
 const Left = styled(Common)`
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  background-color: #dddddd;
 `;
 
 const Right = styled(Common)`

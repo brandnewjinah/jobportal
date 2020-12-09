@@ -6,9 +6,11 @@ import QuizPresenter from "./QuizPresenter";
 const QuizContainer = () => {
   const [quiz, setQuiz] = useState({});
   const [page, setPage] = useState(1);
+  const [length, setLength] = useState();
 
   const getData = async () => {
     const quiz = await quizApi.quiz;
+    setLength(quiz.length);
     const result = quiz.find((item) => item.page === page);
     setQuiz({ quiz: result });
   };
@@ -18,10 +20,20 @@ const QuizContainer = () => {
   }, [page]);
 
   const handleNext = () => {
-    setPage(page + 1);
+    if (page === length) {
+      console.log("last page");
+    } else {
+      setPage(page + 1);
+    }
   };
 
-  return <QuizPresenter {...quiz} handleNext={handleNext} />;
+  const handlePrev = () => {
+    setPage(page - 1);
+  };
+
+  return (
+    <QuizPresenter {...quiz} handleNext={handleNext} handlePrev={handlePrev} />
+  );
 };
 
 export default QuizContainer;

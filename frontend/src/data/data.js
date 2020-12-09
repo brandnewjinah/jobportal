@@ -14,41 +14,6 @@ export const colourOptions = [
 export const quizContents = [
   {
     page: 1,
-    name: "goal",
-    header: "What is your goal",
-    sub: "Select all that apply",
-    type: "selection",
-    selections: [
-      {
-        id: 1,
-        title: "Lose Weight",
-      },
-      {
-        id: 2,
-        title: "Get Healthier",
-        options: [
-          {
-            id: 1,
-            title: "Lower Cholestrol",
-          },
-          {
-            id: 2,
-            title: "Better Sleep",
-          },
-          {
-            id: 3,
-            title: "Improve Hydration",
-          },
-          {
-            id: 4,
-            title: "Better Bowel Movement",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    page: 2,
     name: "measurement",
     header: "Your Measurement",
     sub: "Please enter details",
@@ -57,7 +22,7 @@ export const quizContents = [
       {
         id: 1,
         name: "height",
-        label: "Enter your height",
+        label: "Current height",
         options: [
           { id: 1, label: "cm" },
           { id: 2, label: "ft" },
@@ -66,7 +31,7 @@ export const quizContents = [
       {
         id: 2,
         name: "weight",
-        label: "Enter your weight",
+        label: "Current weight",
         options: [
           { id: 1, label: "kg" },
           { id: 2, label: "lbs" },
@@ -75,11 +40,36 @@ export const quizContents = [
       {
         id: 3,
         name: "goal_weight",
-        label: "Enter your goal weight",
+        label: "Goal weight (optional)",
         options: [
           { id: 1, label: "kg" },
           { id: 2, label: "lbs" },
         ],
+      },
+    ],
+  },
+  {
+    page: 2,
+    name: "health_goal",
+    header: "What is your goal",
+    sub: "Select all that apply",
+    type: "selection",
+    selections: [
+      {
+        id: 1,
+        title: "Lower Cholestrol",
+      },
+      {
+        id: 2,
+        title: "Improve Digestion",
+      },
+      {
+        id: 3,
+        title: "Boost Immunie System",
+      },
+      {
+        id: 4,
+        title: "Stay Hydrated",
       },
     ],
   },

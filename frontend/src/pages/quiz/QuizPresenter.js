@@ -12,12 +12,12 @@ const QuizPresenter = (props) => {
   const page = props.quiz && props.quiz.page;
   const name = quiz && quiz.name;
   const [profile, setProfile] = useState({
-    goal: [],
+    health_goal: [],
     measurement: {},
   });
 
   const handleSelection = (option) => {
-    let newOption = [...profile[name]];
+    let newOption = [...profile[name]]; //health_goal clone
     let duplicate = newOption.find((item) => item.id === option.id);
 
     if (duplicate) {
@@ -30,18 +30,23 @@ const QuizPresenter = (props) => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
-    const userInput = { ...profile.measurement };
-    userInput[input.name] = input.value;
-    console.log(userInput);
+    const userInput = { ...profile[name] };
+    userInput[input.name] = { value: input.value };
     setProfile({ ...profile, [name]: userInput });
   };
-  console.log(profile);
+
+  const handleToggle = (a, b) => {
+    let newPro = { ...profile[name] }; //measurement clone
+    const newOb = { ...newPro, [a]: { unit: b } }; //measurement, add
+    setProfile({ ...profile, [name]: { ...newOb } });
+  };
+
   const handleNext = () => {
     props.handleNext();
   };
 
-  const handleToggle = (label) => {
-    console.log(label);
+  const handlePrev = () => {
+    props.handlePrev();
   };
 
   return (
@@ -50,6 +55,7 @@ const QuizPresenter = (props) => {
         <h4>{quiz && quiz.header}</h4>
         <p>{quiz && quiz.sub}</p>
       </Header>
+
       {quiz && quiz.type === "selection" && (
         <Section>
           {quiz &&
@@ -70,14 +76,15 @@ const QuizPresenter = (props) => {
         <Section>
           {quiz &&
             quiz.selections.map((option, idx) => (
-              <Flex>
-                <Input
-                  key={idx}
-                  placeholder={option.label}
-                  type="text"
-                  name={option.name}
-                  handleChange={handleChange}
-                />
+              <Flex key={idx}>
+                <div style={{ marginRight: `1em` }}>
+                  <Input
+                    placeholder={option.label}
+                    type="text"
+                    name={option.name}
+                    handleChange={handleChange}
+                  />
+                </div>
                 <Flex>
                   {option.options &&
                     option.options.map((o, idx) => (
@@ -85,7 +92,14 @@ const QuizPresenter = (props) => {
                         key={idx}
                         label={o.label}
                         direction={o.id}
-                        handleToggle={() => handleToggle(o.label)}
+                        selected={
+                          profile[name] &&
+                          profile[name][option.name] &&
+                          profile[name][option.name].unit === o.label
+                            ? true
+                            : false
+                        }
+                        handleToggle={() => handleToggle(option.name, o.label)}
                       />
                     ))}
                 </Flex>
@@ -94,7 +108,7 @@ const QuizPresenter = (props) => {
         </Section>
       )}
       <Buttons>
-        {page !== 1 && <BtnArrow direction="left" />}
+        {page !== 1 && <BtnArrow direction="left" handleClick={handlePrev} />}
         <BtnArrow direction="right" handleClick={handleNext} />
       </Buttons>
     </Wrapper>
