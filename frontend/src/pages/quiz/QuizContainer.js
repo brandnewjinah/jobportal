@@ -15,9 +15,13 @@ const QuizContainer = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [page]);
 
-  return <QuizPresenter {...quiz} />;
+  const handleNext = () => {
+    setPage(page + 1);
+  };
+
+  return <QuizPresenter {...quiz} handleNext={handleNext} />;
 };
 
 export default QuizContainer;

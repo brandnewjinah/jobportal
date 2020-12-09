@@ -17,6 +17,7 @@ export const quizContents = [
     name: "goal",
     header: "What is your goal",
     sub: "Select all that apply",
+    type: "selection",
     selections: [
       {
         id: 1,
@@ -42,6 +43,42 @@ export const quizContents = [
             id: 4,
             title: "Better Bowel Movement",
           },
+        ],
+      },
+    ],
+  },
+  {
+    page: 2,
+    name: "measurement",
+    header: "Your Measurement",
+    sub: "Please enter details",
+    type: "input",
+    selections: [
+      {
+        id: 1,
+        name: "height",
+        label: "Enter your height",
+        options: [
+          { id: 1, label: "cm" },
+          { id: 2, label: "ft" },
+        ],
+      },
+      {
+        id: 2,
+        name: "weight",
+        label: "Enter your weight",
+        options: [
+          { id: 1, label: "kg" },
+          { id: 2, label: "lbs" },
+        ],
+      },
+      {
+        id: 3,
+        name: "goal_weight",
+        label: "Enter your goal weight",
+        options: [
+          { id: 1, label: "kg" },
+          { id: 2, label: "lbs" },
         ],
       },
     ],

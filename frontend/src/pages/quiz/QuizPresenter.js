@@ -4,17 +4,20 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { BtnArrow } from "../../components/Button";
 import { Check } from "../../assets/Icons";
+import Input from "../../components/Input";
+import { Selector } from "../../components/Selector";
 
 const QuizPresenter = (props) => {
   const quiz = props.quiz && props.quiz;
+  const page = props.quiz && props.quiz.page;
   const name = quiz && quiz.name;
   const [profile, setProfile] = useState({
     goal: [],
+    measurement: {},
   });
 
   const handleSelection = (option) => {
     let newOption = [...profile[name]];
-
     let duplicate = newOption.find((item) => item.id === option.id);
 
     if (duplicate) {
@@ -26,28 +29,73 @@ const QuizPresenter = (props) => {
     setProfile({ ...profile, [name]: newOption });
   };
 
+  const handleChange = ({ currentTarget: input }) => {
+    const userInput = { ...profile.measurement };
+    userInput[input.name] = input.value;
+    console.log(userInput);
+    setProfile({ ...profile, [name]: userInput });
+  };
+  console.log(profile);
+  const handleNext = () => {
+    props.handleNext();
+  };
+
+  const handleToggle = (label) => {
+    console.log(label);
+  };
+
   return (
     <Wrapper>
       <Header>
         <h4>{quiz && quiz.header}</h4>
         <p>{quiz && quiz.sub}</p>
       </Header>
-      <Section>
-        {quiz &&
-          quiz.selections.map((option, idx) => (
-            <Selection key={idx} onClick={() => handleSelection(option)}>
-              {profile[name].find((f) => f.id === option.id) && (
-                <div>
-                  <Check width="20" height="20" color="#000" stroke="2" />
-                </div>
-              )}
-              {option.title}
-            </Selection>
-          ))}
-      </Section>
+      {quiz && quiz.type === "selection" && (
+        <Section>
+          {quiz &&
+            quiz.selections.map((option, idx) => (
+              <Selection key={idx} onClick={() => handleSelection(option)}>
+                {profile[name].find((f) => f.id === option.id) && (
+                  <div>
+                    <Check width="20" height="20" color="#000" stroke="2" />
+                  </div>
+                )}
+                {option.title}
+              </Selection>
+            ))}
+        </Section>
+      )}
+
+      {quiz && quiz.type === "input" && (
+        <Section>
+          {quiz &&
+            quiz.selections.map((option, idx) => (
+              <Flex>
+                <Input
+                  key={idx}
+                  placeholder={option.label}
+                  type="text"
+                  name={option.name}
+                  handleChange={handleChange}
+                />
+                <Flex>
+                  {option.options &&
+                    option.options.map((o, idx) => (
+                      <Selector
+                        key={idx}
+                        label={o.label}
+                        direction={o.id}
+                        handleToggle={() => handleToggle(o.label)}
+                      />
+                    ))}
+                </Flex>
+              </Flex>
+            ))}
+        </Section>
+      )}
       <Buttons>
-        <BtnArrow direction="left" />
-        <BtnArrow direction="right" />
+        {page !== 1 && <BtnArrow direction="left" />}
+        <BtnArrow direction="right" handleClick={handleNext} />
       </Buttons>
     </Wrapper>
   );
@@ -56,6 +104,12 @@ const QuizPresenter = (props) => {
 const Wrapper = styled.div`
   width: 100%;
   margin: 3em auto;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Header = styled.div`

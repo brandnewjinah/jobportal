@@ -39,7 +39,7 @@ export const BtnText: FC<Props> = ({ label, handleClick }) => {
 
 export const BtnArrow: FC<Props> = ({ label, direction, handleClick }) => {
   return (
-    <Circle>
+    <Circle onClick={handleClick}>
       {direction === "left" ? (
         <ArrowLeft width="20" height="20" color="#000" stroke="2" />
       ) : (
@@ -84,4 +84,5 @@ const Circle = styled.button`
   padding: 1em;
   border-radius: 50%;
   border: none;
+  cursor: pointer;
 `;
