@@ -17,7 +17,9 @@ const QuizPresenter = (props) => {
   const name = quiz && quiz.name;
   const [profile, setProfile] = useState({
     health_goal: [],
-    measurement: props.measurement,
+    height: {},
+    weight: {},
+    goal_weight: {},
   });
 
   const handleSelection = (option) => {
@@ -34,25 +36,25 @@ const QuizPresenter = (props) => {
   };
 
   const handleChange = ({ currentTarget: input }) => {
-    const userInput = { ...profile[name] };
-    userInput[input.name] = { value: input.value };
-    setProfile({ ...profile, [name]: userInput });
+    const userInput = { ...profile[input.name], value: input.value };
+    setProfile({ ...profile, [input.name]: userInput });
   };
 
   const handleToggle = (a, b) => {
-    let newPro = { ...profile[name] }; //measurement clone
-    const newOb = { ...newPro, [a]: { ...newPro[a], unit: b } }; //measurement, add
-    setProfile({ ...profile, [name]: { ...newOb } });
+    let newPro = { ...profile[a], unit: b };
+    setProfile({ ...profile, [a]: newPro });
   };
 
   const handleNext = () => {
     props.addMeasurement(profile);
-    props.handleNext();
+    props.handleNext(profile);
   };
 
   const handlePrev = () => {
     props.handlePrev();
   };
+
+  // console.log(profile);
 
   return (
     <Wrapper>
@@ -98,9 +100,8 @@ const QuizPresenter = (props) => {
                         label={o.label}
                         direction={o.id}
                         selected={
-                          profile[name] &&
-                          profile[name][option.name] &&
-                          profile[name][option.name].unit === o.label
+                          profile[option.name] &&
+                          profile[option.name].unit === o.label
                             ? true
                             : false
                         }

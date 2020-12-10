@@ -9,27 +9,32 @@ const user = require("../models/user");
 // @access Private
 
 exports.profile_create = (req, res) => {
-  const profileFields = {};
+  const measurements = {
+    height: {},
+    weight: {},
+    goal_weight: {},
+  };
+  measurements.user = req.user.id;
 
-  profileFields.user = req.user.id; //from checkAuth
-  if (req.body.handle) profileFields.handle = req.body.handle;
+  if (req.body.height.value) measurements.height.value = req.body.height.value;
+  if (req.body.height.value) measurements.height.value = req.body.height.value;
+  if (req.body.height.unit) measurements.height.unit = req.body.height.unit;
+  if (req.body.weight.value) measurements.weight.value = req.body.weight.value;
+  if (req.body.weight.unit) measurements.weight.unit = req.body.weight.unit;
+  if (req.body.goal_weight.value)
+    measurements.goal_weight.value = req.body.goal_weight.value;
+  if (req.body.goal_weight.unit)
+    measurements.goal_weight.unit = req.body.goal_weight.unit;
 
-  if (typeof req.body.interests !== "undefined") {
-    // profileFields.interests = req.body.interests.split(",");
-    profileFields.interests = req.body.interests;
-  }
-
-  //find matching user profile
   profileModel
     .findOne({ user: req.user.id })
     .then((profile) => {
       if (profile) {
         return res.json({
-          message: "Profile already exists. Please update profile",
+          message: "Profile already exists.",
         });
       } else {
-        // if no profile, post new profile
-        new profileModel(profileFields)
+        new profileModel(measurements)
           .save()
           .then((profile) => res.json(profile))
           .catch((err) => res.status(408).json(err));
