@@ -71,6 +71,10 @@ export const quizContents = [
         id: 4,
         title: "Stay Hydrated",
       },
+      {
+        id: 5,
+        title: "Improve Bowel Movement",
+      },
     ],
   },
 ];

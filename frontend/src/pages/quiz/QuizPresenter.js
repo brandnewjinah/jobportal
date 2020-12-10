@@ -7,13 +7,17 @@ import { Check } from "../../assets/Icons";
 import Input from "../../components/Input";
 import { Selector } from "../../components/Selector";
 
+//redux
+import { connect } from "react-redux";
+import { addMeasurement } from "../../store/quiz";
+
 const QuizPresenter = (props) => {
   const quiz = props.quiz && props.quiz;
   const page = props.quiz && props.quiz.page;
   const name = quiz && quiz.name;
   const [profile, setProfile] = useState({
     health_goal: [],
-    measurement: {},
+    measurement: props.measurement,
   });
 
   const handleSelection = (option) => {
@@ -37,11 +41,12 @@ const QuizPresenter = (props) => {
 
   const handleToggle = (a, b) => {
     let newPro = { ...profile[name] }; //measurement clone
-    const newOb = { ...newPro, [a]: { unit: b } }; //measurement, add
+    const newOb = { ...newPro, [a]: { ...newPro[a], unit: b } }; //measurement, add
     setProfile({ ...profile, [name]: { ...newOb } });
   };
 
   const handleNext = () => {
+    props.addMeasurement(profile);
     props.handleNext();
   };
 
@@ -176,4 +181,11 @@ const Buttons = styled.div`
   }
 `;
 
-export default QuizPresenter;
+const mapStateToProps = (state) => {
+  return {
+    health_goal: state.health_goal,
+    measurement: state.measurement,
+  };
+};
+
+export default connect(mapStateToProps, { addMeasurement })(QuizPresenter);

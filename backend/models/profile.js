@@ -7,10 +7,36 @@ const profileSchema = mongoose.Schema(
     //   ref: "user",
     //   required: true,
     // },
-    handle: {
-      type: String,
-      max: 40,
-    },
+    health_goal: [
+      {
+        school: {
+          type: String,
+          required: true,
+        },
+        degree: {
+          type: String,
+          required: true,
+        },
+        fieldofstudy: {
+          type: String,
+          required: true,
+        },
+        from: {
+          type: Date,
+          required: true,
+        },
+        to: {
+          type: Date,
+        },
+        current: {
+          type: Boolean,
+          default: false,
+        },
+        description: {
+          type: String,
+        },
+      },
+    ],
     interests: [],
   },
   { timestamps: true }
