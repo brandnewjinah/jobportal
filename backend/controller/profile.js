@@ -9,22 +9,23 @@ const user = require("../models/user");
 // @access Private
 
 exports.profile_create = (req, res) => {
-  const measurements = {
+  const profileFields = {
     height: {},
     weight: {},
     goal_weight: {},
   };
-  measurements.user = req.user.id;
 
-  if (req.body.height.value) measurements.height.value = req.body.height.value;
-  if (req.body.height.value) measurements.height.value = req.body.height.value;
-  if (req.body.height.unit) measurements.height.unit = req.body.height.unit;
-  if (req.body.weight.value) measurements.weight.value = req.body.weight.value;
-  if (req.body.weight.unit) measurements.weight.unit = req.body.weight.unit;
+  profileFields.user = req.user.id;
+
+  if (req.body.height.value) profileFields.height.value = req.body.height.value;
+  if (req.body.height.unit) profileFields.height.unit = req.body.height.unit;
+  if (req.body.weight.value) profileFields.weight.value = req.body.weight.value;
+  if (req.body.weight.unit) profileFields.weight.unit = req.body.weight.unit;
   if (req.body.goal_weight.value)
-    measurements.goal_weight.value = req.body.goal_weight.value;
+    profileFields.goal_weight.value = req.body.goal_weight.value;
   if (req.body.goal_weight.unit)
-    measurements.goal_weight.unit = req.body.goal_weight.unit;
+    profileFields.goal_weight.unit = req.body.goal_weight.unit;
+  if (req.body.health_goal) profileFields.health_goal = req.body.health_goal;
 
   profileModel
     .findOne({ user: req.user.id })
@@ -34,7 +35,7 @@ exports.profile_create = (req, res) => {
           message: "Profile already exists.",
         });
       } else {
-        new profileModel(measurements)
+        new profileModel(profileFields)
           .save()
           .then((profile) => res.json(profile))
           .catch((err) => res.status(408).json(err));

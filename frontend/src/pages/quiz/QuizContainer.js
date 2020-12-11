@@ -29,21 +29,14 @@ const QuizContainer = (props) => {
 
   const handleNext = (profile) => {
     if (page === 1) {
-      postData(profile);
-      // setPage(page + 1);
+      setPage(page + 1);
     }
     if (page === length) {
-      // setPage(page + 1);
+      postData(profile);
     }
   };
 
   const postData = async (profile) => {
-    const measurement = {
-      height: profile.height,
-      weight: profile.weight,
-      goal_weight: profile.goal_weight,
-    };
-
     const token = localStorage.getItem("token");
 
     const options = {
@@ -53,11 +46,10 @@ const QuizContainer = (props) => {
     };
 
     await axios
-      .post("http://localhost:5000/profile", measurement, options)
+      .post("http://localhost:5000/profile", profile, options)
       .then((res) => {
         if (res.status === 200) {
-          alert("Profile saved successfully");
-          window.location = "/";
+          console.log("success");
         }
       })
       .catch((err) => {

@@ -7,7 +7,6 @@ const profileSchema = mongoose.Schema(
       ref: "user",
       required: true,
     },
-
     height: {
       value: {
         type: String,

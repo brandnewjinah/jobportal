@@ -14,7 +14,9 @@ const persistConfig = {
 
 const initialStore = {
   health_goal: [],
-  measurement: {},
+  height: {},
+  weight: {},
+  goal_weight: {},
 };
 
 const middleware = [thunk];

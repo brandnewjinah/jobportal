@@ -9,7 +9,7 @@ import { Selector } from "../../components/Selector";
 
 //redux
 import { connect } from "react-redux";
-import { addMeasurement } from "../../store/quiz";
+import { addProfile } from "../../store/quiz";
 
 const QuizPresenter = (props) => {
   const quiz = props.quiz && props.quiz;
@@ -17,9 +17,9 @@ const QuizPresenter = (props) => {
   const name = quiz && quiz.name;
   const [profile, setProfile] = useState({
     health_goal: [],
-    height: {},
-    weight: {},
-    goal_weight: {},
+    height: props.height,
+    weight: props.weight,
+    goal_weight: props.goal_weight,
   });
 
   const handleSelection = (option) => {
@@ -46,15 +46,13 @@ const QuizPresenter = (props) => {
   };
 
   const handleNext = () => {
-    props.addMeasurement(profile);
+    props.addProfile(profile);
     props.handleNext(profile);
   };
 
   const handlePrev = () => {
     props.handlePrev();
   };
-
-  // console.log(profile);
 
   return (
     <Wrapper>
@@ -185,8 +183,10 @@ const Buttons = styled.div`
 const mapStateToProps = (state) => {
   return {
     health_goal: state.health_goal,
-    measurement: state.measurement,
+    height: state.height,
+    weight: state.weight,
+    goal_weight: state.goal_weight,
   };
 };
 
-export default connect(mapStateToProps, { addMeasurement })(QuizPresenter);
+export default connect(mapStateToProps, { addProfile })(QuizPresenter);

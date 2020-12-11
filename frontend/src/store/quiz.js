@@ -1,11 +1,11 @@
 // Action types
-const ADD_MEASUREMENT = "ADD_MEASUREMENT";
+const ADD_PROFILE = "ADD_PROFILE";
 
 // Action creators
-export const addMeasurement = (item) => {
+export const addProfile = (item) => {
   return (dispatch) => {
     dispatch({
-      type: ADD_MEASUREMENT,
+      type: ADD_PROFILE,
       payload: {
         item,
       },
@@ -15,10 +15,19 @@ export const addMeasurement = (item) => {
 
 // Reducer
 const reducer = (state, action) => {
-  if (action.type === ADD_MEASUREMENT) {
-    let newMeasure = action.payload.item.measurement;
+  if (action.type === ADD_PROFILE) {
+    console.log(action.payload.item);
+    let newHeight = action.payload.item.height;
+    let newWeight = action.payload.item.weight;
+    let newGoalWeight = action.payload.item.goal_weight;
     let newHealth = action.payload.item.health_goal;
-    return { ...state, measurement: newMeasure, health_goal: newHealth };
+    return {
+      ...state,
+      height: newHeight,
+      weight: newWeight,
+      goal_weight: newGoalWeight,
+      health_goal: newHealth,
+    };
   }
 
   return state;
